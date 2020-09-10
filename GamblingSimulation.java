@@ -1,68 +1,77 @@
 public class GamblingSimulation {
-	// declare constant variable
+	//declare constant variable
 	final int STAKE = 100;
 	final int BET = 1;
 	final int WINING_CASH = 150;
 	final int LOOSING_CASH = 50;
 	final int NO_OF_DAYS = 30;
-	final int STAKE_PERCENTAGE = 50;
-	int result;
-	int dayResult = 0;
-	int win = 0;
-	int lost = 0;
 
-	public void getTotalAmountWinOrLost() {
+	int winArr[] = new int[NO_OF_DAYS];
+	int lostArr[] = new int[NO_OF_DAYS];
 
-		for (int day = 1; day <= NO_OF_DAYS; day++) {
-			result = STAKE;
+	public void checkWinLoose() {
+
+		for (int day = 0; day < NO_OF_DAYS; day++) {
+			int winCount = 0;
+			int lostCount = 0;
+			int result = STAKE;
 			while ((result != WINING_CASH) && (result != LOOSING_CASH)) {
 				int randomCheck = (int) Math.floor(Math.random() * 10) % 2;
 
 				if (randomCheck == 1) {
 					result = result + BET;
+					winCount++;
 
 				} else {
 					result = result - BET;
+					lostCount++;
+
 				}
 
 			}
 
 			if (result == WINING_CASH) {
-				dayResult = dayResult + 1;
-				win = win + STAKE_PERCENTAGE;
-				System.out.println("total Amount won in day:" + day + ": " + result);
-
+				System.out.println("you won the game");
+				winArr[day] = winCount;
+				System.out.println("total Amount won :" + winCount + " in day: " + (day + 1));
 			} else {
-				dayResult = dayResult - 1;
-				lost = lost - STAKE_PERCENTAGE;
-				System.out.println("total amount lost in days:" + day + ": " + +result);
+				System.out.println("you lost the game");
+				lostArr[day] = lostCount;
+				System.out.println("total Amount lost: " + lostCount + " in day: " + (day + 1));
 			}
 
 		}
 
-		System.out.println();
-		System.out.println("total win: " + win);
-		System.out.println("total lost: " + Math.abs(lost));
-		int totalAmount = dayResult * STAKE_PERCENTAGE;
+		int maxWin = 0;
 
-		if (totalAmount == 0) {
-			System.out.println("---------------------------------------");
-			System.out.println("Amount constant: no lost no win");
-		} else if (totalAmount > 0) {
-			System.out.println("---------------------------------------");
-
-			System.out.println("you won total amount: " + totalAmount);
-		} else {
-			System.out.println("---------------------------------------");
-
-			System.out.println("you lost total amount: " + Math.abs(totalAmount));
+		int luckyDay = 0;
+		for (int day = 0; day < NO_OF_DAYS; day++) {
+			if (winArr[day] > maxWin && winArr[day] != 0) {
+				maxWin = winArr[day];
+				luckyDay = day;
+			}
 		}
+
+		System.out.println("your lukkiest day:" + (luckyDay + 1));
+
+		int maxLost = 0;
+
+		int unLuckyDay = 0;
+		for (int day = 0; day < NO_OF_DAYS; day++) {
+			if (lostArr[day] > maxLost && lostArr[day] != 0) {
+				maxLost = lostArr[day];
+				unLuckyDay = day;
+			}
+		}
+
+		System.out.println("your unlukkiest day:" + (unLuckyDay + 1));
 
 	}
 
 	public static void main(String[] args) {
 		GamblingSimulation obj = new GamblingSimulation();
-		obj.getTotalAmountWinOrLost();
+		obj.checkWinLoose();
+
 	}
 
 }
