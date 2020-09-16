@@ -10,7 +10,6 @@ public class GamblingSimulation {
 	// Gambling won or lost on 50% of stake
 	public void checkWinLoose() {
 		while (result != WINING_CASH && result != LOOSING_CASH) {
-
 			// to get random number between 0 or 1.
 			int bettingResult = (int) (Math.floor(Math.random() * 10) % 2);
 			if (bettingResult == 1) {
@@ -18,9 +17,7 @@ public class GamblingSimulation {
 			} else {
 				result = result - BET_AMOUNT;
 			}
-
 		}
-
 		if (result == WINING_CASH) {
 			System.out.println("you won the game");
 			System.out.println("stake: " + result);
@@ -28,13 +25,10 @@ public class GamblingSimulation {
 			System.out.println("you loose the game");
 			System.out.println("stake: " + result);
 		}
-
 	}
 
 	public static void main(String args[]) {
-
-		GamblingSimulation gs = new GamblingSimulation();
-		gs.checkWinLoose();
+		GamblingSimulation gsObject = new GamblingSimulation();
+		gsObject.checkWinLoose();
 	}
-
 }
